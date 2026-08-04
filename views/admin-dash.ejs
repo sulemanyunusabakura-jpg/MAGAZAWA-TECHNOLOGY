@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Admin Dashboard - Magazawa Tech</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <div class="container">
+    <div class="flex-space">
+      <div>
+        <h2>MAGAZAWA TECHNOLOGY AND SCIENCE</h2>
+        <p>System Administration Portal</p>
+      </div>
+      <a href="/logout" class="btn btn-danger">Logout</a>
+    </div>
+    <hr><br>
+
+    <!-- REGISTERED LECTURERS LIST TABLE -->
+    <div class="card">
+      <h3>👨‍🏫 Registered Lecturers List</h3>
+      <% if (lecturers.length === 0) { %>
+        <p>No lecturers added yet.</p>
+      <% } else { %>
+        <table>
+          <tr>
+            <th>Full Name</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>Assigned Course / Department</th>
+          </tr>
+          <% lecturers.forEach(lec => { %>
+            <tr>
+              <td><strong><%= lec.fullname %></strong></td>
+              <td><%= lec.email %></td>
+              <td><%= lec.phone || 'N/A' %></td>
+              <td><span class="badge badge-admitted"><%= lec.course %></span></td>
+            </tr>
+          <% }) %>
+        </table>
+      <% } %>
+    </div>
+
+    <!-- REGISTER NEW LECTURER FORM -->
+    <div class="card">
+      <h3>➕ Register New Lecturer</h3>
+      <form action="/admin/add-lecturer" method="POST">
+        <div class="form-group">
+          <label>Lecturer Full Name:</label>
+          <input type="text" name="fullname" required>
+        </div>
+        <div class="form-group">
+          <label>Email Address:</label>
+          <input type="email" name="email" required>
+        </div>
+        <div class="form-group">
+          <label>Phone Number:</label>
+          <input type="text" name="phone" required>
+        </div>
+        <div class="form-group">
+          <label>Course / Subject Name:</label>
+          <input type="text" name="course" required>
+        </div>
+        <div class="form-group">
+          <label>Password:</label>
+          <input type="password" name="password" required>
+        </div>
+        <button type="submit" class="btn btn-success">Add Lecturer</button>
+      </form>
+    </div>
+
+    <!-- STUDENT ADMISSIONS TABLE -->
+    <div class="card">
+      <h3>🎓 Applicant Students & Admissions</h3>
+      <table>
+        <tr>
+          <th>Student</th>
+          <th>Course</th>
+          <th>Status</th>
+          <th>Action</th>
+        </tr>
+        <% students.forEach(st => { %>
+          <tr>
+            <td><strong><%= st.fullname %></strong><br><small><%= st.email %></small></td>
+            <td><%= st.course %></td>
+            <td><span class="badge <%= st.status === 'Admitted' ? 'badge-admitted' : 'badge-pending' %>"><%= st.status %></span></td>
+            <td>
+              <% if(st.status !== 'Admitted') { %>
+                <form action="/admin/admit/<%= st.id %>" method="POST">
+                  <button type="submit" class="btn btn-success" style="padding:4px 8px; font-size:12px;">Approve Admission</button>
+                </form>
+              <% } else { %>
+                <small style="color:#00d8fe;">Reg: <%= st.reg_no %></small>
+              <% } %>
+            </td>
+          </tr>
+        <% }) %>
+      </table>
+    </div>
+
+  </div>
+</body>
+</html>
