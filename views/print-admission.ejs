@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Admission Letter - <%= student.fullname %></title>
+  <style>
+    body { font-family: 'Times New Roman', serif; padding: 40px; background: #f9f9f9; }
+    .letter-head { text-align: center; border-bottom: 3px double #000; padding-bottom: 15px; margin-bottom: 30px; }
+    .letter-head h1 { margin: 0; font-size: 26px; text-transform: uppercase; }
+    .letter-head p { margin: 5px 0; font-weight: bold; }
+    .content { font-size: 18px; line-height: 1.8; margin-bottom: 40px; }
+    .details-table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+    .details-table td { padding: 10px; border: 1px solid #000; }
+    .print-btn { background: #0056b3; color: white; padding: 12px 24px; border: none; font-size: 16px; cursor: pointer; border-radius: 4px; }
+    @media print { .no-print { display: none; } body { padding: 0; background: #fff; } }
+  </style>
+</head>
+<body>
+
+  <div class="no-print" style="text-align: right; margin-bottom: 20px;">
+    <button onclick="window.print()" class="print-btn">Print Letter / Save as PDF 🖨️</button>
+  </div>
+
+  <div style="background: white; padding: 50px; border: 1px solid #ccc; max-width: 800px; margin: 0 auto;">
+    <div class="letter-head">
+      <h1>MAGAZAWA TECHNOLOGY AND SCIENCE</h1>
+      <p>OFFICE OF THE REGISTRAR & ADMISSIONS BOARD</p>
+      <p>OFFICIAL PROVISIONAL ADMISSION LETTER</p>
+    </div>
+
+    <p style="text-align: right;"><strong>Date:</strong> <%= new Date().toLocaleDateString() %></p>
+
+    <div class="content">
+      <p>Dear <strong><%= student.fullname %></strong>,</p>
+
+      <p>We are pleased to inform you that following your application, you have been offered <strong>Provisional Admission</strong> into <strong>MAGAZAWA TECHNOLOGY AND SCIENCE</strong> for the academic program specified below:</p>
+
+      <table class="details-table">
+        <tr><td><strong>Registration / Matric Number:</strong></td><td><%= student.reg_no %></td></tr>
+        <tr><td><strong>Department / Program:</strong></td><td><%= student.course %></td></tr>
+        <tr><td><strong>Remita RRR Code (Tuition):</strong></td><td><%= student.remita_code %></td></tr>
+      </table>
+
+      <p>Please present this letter alongside your payment slip during registration and physical screening upon resumption.</p>
+
+      <p>Congratulations on your admission!</p>
+    </div>
+
+    <div style="margin-top: 60px; display: flex; justify-content: space-between;">
+      <div>
+        <p>___________________________</p>
+        <p><strong>Registrar</strong></p>
+      </div>
+      <div>
+        <% if(student.passport) { %>
+          <img src="/uploads/<%= student.passport %>" style="width: 100px; height: 100px; border: 1px solid #000; object-fit: cover;">
+        <% } %>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>
