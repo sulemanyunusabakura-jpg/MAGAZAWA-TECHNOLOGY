@@ -1,0 +1,19 @@
+{
+  "name": "lms-portal",
+  "version": "1.0.0",
+  "description": "Student Admission and Live Lecture Portal",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "ejs": "^3.1.10",
+    "express": "^4.22.2",
+    "express-session": "^1.19.0",
+    "multer": "^1.4.5-lts.2",
+    "pg": "^8.22.0",
+    "socket.io": "^4.8.3",
+    "sqlite3": "^5.1.6"
+  }
+}
