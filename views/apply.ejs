@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head><title>Apply</title><link rel="stylesheet" href="/style.css"></head>
+<body>
+  <div class="container">
+    <h1>Student Admission Form</h1>
+    <p>Already applied? <a href="/login">Login here</a></p><hr><br>
+    <form action="/register" method="POST" enctype="multipart/form-data">
+      <div class="form-group"><label>Full Name:</label><input type="text" name="fullname" required></div>
+      <div class="form-group"><label>Date of Birth:</label><input type="date" name="dob" required></div>
+      <div class="form-group"><label>Email Address:</label><input type="email" name="email" required></div>
+      <div class="form-group"><label>Primary School Name:</label><input type="text" name="primary_school" required></div>
+      <div class="form-group"><label>Secondary School Name:</label><input type="text" name="secondary_school" required></div>
+      <div class="form-group"><label>Passport Photo:</label><input type="file" name="passport" accept="image/*" required></div>
+      <div class="form-group"><label>Upload Secondary Results:</label><input type="file" name="results" required></div>
+      <div class="form-group">
+        <label>Course of Study:</label>
+        <select name="course" required>
+          <option value="Computer Science">Computer Science</option>
+          <option value="Electrical Engineering">Electrical Engineering</option>
+          <option value="Computer Engineering">Computer Engineering</option>
+          <option value="Chemistry Science">Chemistry Science</option>
+          <option value="Physics">Physics</option>
+          <option value="Mechanical Engineering">Mechanical Engineering</option>
+          <option value="Firmware Engineering">Firmware Engineering</option>
+        </select>
+      </div>
+      <div class="form-group"><label>Password 🔑:</label><input type="password" name="password" required></div>
+      <button type="submit" class="btn">Submit Application</button>
+    </form>
+  </div>
+</body>
+</html>
