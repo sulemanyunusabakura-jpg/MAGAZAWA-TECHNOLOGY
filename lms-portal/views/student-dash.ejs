@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Student Dashboard - Magazawa Tech</title>
+  <link rel="stylesheet" href="/style.css">
+  <script>
+    function toggleAccountModal() {
+      var modal = document.getElementById('accountModal');
+      modal.style.display = (modal.style.display === 'block') ? 'none' : 'block';
+    }
+  </script>
+</head>
+<body>
+  <div class="container">
+    <div class="flex-space">
+      <div>
+        <h2>MAGAZAWA TECHNOLOGY AND SCIENCE</h2>
+        <p>Student Portal Dashboard</p>
+      </div>
+      <div>
+        <button onclick="toggleAccountModal()" class="btn">👤 My Account</button>
+        <a href="/logout" class="btn btn-danger">Logout</a>
+      </div>
+    </div>
+    <hr><br>
+
+    <!-- ADMISSION LETTER ACTION CARD -->
+    <% if (student.status === 'Admitted') { %>
+      <div class="card flex-space" style="border: 2px solid #00d8fe; background: #132a48;">
+        <div>
+          <h3 style="color:#00d8fe;">🎉 Provisional Admission Granted</h3>
+          <p>Registration No: <strong><%= student.reg_no %></strong> | Remita Ref: <strong><%= student.remita_code %></strong></p>
+        </div>
+        <a href="/admission-letter" target="_blank" class="btn btn-success">📜 View & Print Admission Letter</a>
+      </div>
+    <% } %>
+
+    <!-- ACADEMIC RESULTS SECTION -->
+    <div class="card">
+      <h3>📊 My Published Academic Results</h3>
+      <% if (academicResults.length === 0) { %>
+        <p>No examination results published yet.</p>
+      <% } else { %>
+        <table>
+          <tr>
+            <th>Course Code</th>
+            <th>Course Title</th>
+            <th>Score</th>
+            <th>Grade</th>
+            <th>Lecturer</th>
+          </tr>
+          <% academicResults.forEach(r => { %>
+            <tr>
+              <td><strong><%= r.course_code %></strong></td>
+              <td><%= r.course_title %></td>
+              <td><%= r.score %>%</td>
+              <td><span class="badge badge-admitted"><%= r.grade %></span></td>
+              <td><%= r.lecturer_name %></td>
+            </tr>
+          <% }) %>
+        </table>
+      <% } %>
+    </div>
+
+    <!-- MY ACCOUNT MODAL POPUP -->
+    <div id="accountModal" style="display:none; position:fixed; top:10%; left:20%; width:60%; background:#0b192c; padding:25px; border:2px solid #00d8fe; border-radius:10px; z-index:100; box-shadow:0 0 20px #000;">
+      <div class="flex-space">
+        <h3 style="color:#00d8fe;">👤 My Account Details & Application Credentials</h3>
+        <button onclick="toggleAccountModal()" class="btn btn-danger">X Close</button>
+      </div>
+      <hr><br>
+      <div style="display:flex; gap:20px;">
+        <div>
+          <% if(student.passport) { %>
+            <img src="/uploads/<%= student.passport %>" style="width:120px; height:120px; border-radius:10px; object-fit:cover; border:2px solid #00d8fe;">
+          <% } %>
+        </div>
+        <div>
+          <p><strong>Full Name:</strong> <%= student.fullname %></p>
+          <p><strong>Email Address:</strong> <%= student.email %></p>
+          <p><strong>Course / Department:</strong> <%= student.course %></p>
+          <p><strong>Primary School:</strong> <%= student.primary_school %></p>
+          <p><strong>Secondary School:</strong> <%= student.secondary_school %></p>
+          <% if(student.result_file) { %>
+            <p><a href="/uploads/<%= student.result_file %>" target="_blank" style="color:#00d8fe;">📄 Open Application Document (WAEC/NECO)</a></p>
+          <% } %>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</body>
+</html>
