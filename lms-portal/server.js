@@ -15,6 +15,9 @@ const io = new Server(server);
 const PORT = process.env.PORT || 10000;
 
 // 2. CONFIGURE VIEWS ENGINE & MIDDLEWARE
+// Ensure path explicitly targets lowercase 'views'
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
