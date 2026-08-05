@@ -122,7 +122,42 @@ async function initDB() {
         setupLocalAdmin();
     }
 }
+// Landing / Apply Pages
+app.get('/', (req, res) => res.render('apply'));
+app.get('/apply', (req, res) => res.render('apply'));
+app.get('/register', (req, res) => res.render('apply'));
 
+// Handle form submission for both /apply and /register
+const handleUserRegistration = async (req, res) => {
+    const { name, email, password, role } = req.body;
+    try {
+        const hashedPassword = await bcrypt.hash(password, 10);
+        const approved = role === 'student';
+
+        if (isPgConnected && pool) {
+            await pool.query(
+                'INSERT INTO users (name, email, password, role, approved) VALUES ($1, $2, $3, $4, $5)',
+                [name, email, hashedPassword, role, approved]
+            );
+        } else {
+            localMemoryDB.users.push({
+                id: localMemoryDB.users.length + 1,
+                name,
+                email,
+                password: hashedPassword,
+                role,
+                approved
+            });
+        }
+        res.send('<h2>Application submitted successfully! <a href="/login">Click here to Login</a></h2>');
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('Error creating user or email already exists.');
+    }
+};
+
+app.post('/apply', handleUserRegistration);
+app.post('/register', handleUserRegistration);
 async function setupLocalAdmin() {
     const adminEmail = 'admin@portal.com';
     const exists = localMemoryDB.users.find(u => u.email === adminEmail);
